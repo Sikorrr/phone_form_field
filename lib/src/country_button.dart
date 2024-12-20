@@ -9,26 +9,28 @@ class CountryButton extends StatelessWidget {
   final Function()? onTap;
   final IsoCode isoCode;
   final TextStyle? textStyle;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
   final double flagSize;
   final bool showFlag;
   final bool showDialCode;
   final bool showIsoCode;
   final bool showDropdownIcon;
   final bool enabled;
+  final Color? iconColor;
 
   const CountryButton({
     super.key,
     required this.isoCode,
     required this.onTap,
     this.textStyle,
-    this.padding = const EdgeInsets.fromLTRB(12, 16, 4, 16),
+    this.padding,
     this.flagSize = 20,
     this.showFlag = true,
     this.showDialCode = true,
     this.showIsoCode = false,
     this.showDropdownIcon = true,
     this.enabled = true,
+    this.iconColor
   });
 
   @override
@@ -43,7 +45,7 @@ class CountryButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: padding,
+        padding: padding?? EdgeInsets.symmetric(horizontal: 4),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -74,7 +76,9 @@ class CountryButton extends StatelessWidget {
               ),
             ],
             if (showDropdownIcon)
-              const ExcludeSemantics(child: Icon(Icons.arrow_drop_down)),
+              ExcludeSemantics(child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Icon(Icons.arrow_drop_down, color: iconColor, size: 20,))),
           ],
         ),
       ),

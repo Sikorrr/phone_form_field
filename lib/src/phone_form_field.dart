@@ -56,6 +56,8 @@ class PhoneFormField extends FormField<PhoneNumber> {
   /// The style of the country selector button
   final CountryButtonStyle countryButtonStyle;
 
+
+
   // textfield inputs
   final InputDecoration decoration;
   final TextInputType keyboardType;
@@ -94,6 +96,8 @@ class PhoneFormField extends FormField<PhoneNumber> {
   final Iterable<String>? autofillHints;
   final bool enableIMEPersonalizedLearning;
   final List<TextInputFormatter>? inputFormatters;
+  final BoxDecoration? inputDecoration;
+  final Color? inputTextColor;
 
   static preloadFlags() => CountrySelector.preloadFlags();
 
@@ -102,6 +106,8 @@ class PhoneFormField extends FormField<PhoneNumber> {
     this.controller,
     this.onChanged,
     this.focusNode,
+    this.inputDecoration,
+    this.inputTextColor,
     this.countrySelectorNavigator = const CountrySelectorNavigator.page(),
     this.isCountrySelectionEnabled = true,
     this.isCountryButtonPersistent = true,
@@ -152,13 +158,13 @@ class PhoneFormField extends FormField<PhoneNumber> {
     this.autofillHints,
     this.enableIMEPersonalizedLearning = true,
   })  : assert(
-          initialValue == null || controller == null,
-          'One of initialValue or controller can be specified at a time',
-        ),
+  initialValue == null || controller == null,
+  'One of initialValue or controller can be specified at a time',
+  ),
         super(
-          builder: (state) => (state as PhoneFormFieldState).builder(),
-          initialValue: controller?.value ?? initialValue,
-        );
+        builder: (state) => (state as PhoneFormFieldState).builder(),
+        initialValue: controller?.value ?? initialValue,
+      );
 
   @override
   PhoneFormFieldState createState() => PhoneFormFieldState();

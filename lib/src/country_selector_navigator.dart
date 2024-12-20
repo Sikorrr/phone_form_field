@@ -8,17 +8,23 @@ abstract class CountrySelectorNavigator {
   final bool showDialCode;
   final bool sortCountries;
   final String? noResultMessage;
+  final BoxDecoration? backgroundDecoration;
   final bool searchAutofocus;
   final TextStyle? subtitleStyle;
   final TextStyle? titleStyle;
   final InputDecoration? searchBoxDecoration;
   final TextStyle? searchBoxTextStyle;
   final Color? searchBoxIconColor;
+  final Color? dividerColor;
+  final Color? countryListBackgroundColor;
   final ScrollPhysics? scrollPhysics;
-  final double flagSize;
+  final double? flagSize;
   final bool useRootNavigator;
+  final Widget? backgroundWidget;
+  final Widget? backButtonIcon;
 
   const CountrySelectorNavigator({
+    this.backgroundDecoration,
     this.countries,
     this.favorites,
     @Deprecated('This is always on, this can be safely removed')
@@ -30,11 +36,15 @@ abstract class CountrySelectorNavigator {
     required this.searchAutofocus,
     this.subtitleStyle,
     this.titleStyle,
+    this.dividerColor,
     this.searchBoxDecoration,
     this.searchBoxTextStyle,
     this.searchBoxIconColor,
     this.scrollPhysics,
-    this.flagSize = 40,
+    this.countryListBackgroundColor,
+    this.flagSize,
+    this.backgroundWidget,
+    this.backButtonIcon,
     this.useRootNavigator = true,
   }) : showDialCode = showDialCode ?? showCountryCode ?? true;
 
@@ -107,8 +117,14 @@ abstract class CountrySelectorNavigator {
     TextStyle? subtitleStyle,
     TextStyle? titleStyle,
     InputDecoration? searchBoxDecoration,
+    BoxDecoration? backgroundDecoration,
     TextStyle? searchBoxTextStyle,
     Color? searchBoxIconColor,
+    Color? dividerColor,
+    Widget? backgroundWidget,
+    Widget? backButtonIcon,
+    Color? countryListBackgroundColor,
+    double? flagSize,
     ScrollPhysics? scrollPhysics,
     @Deprecated('Use [Theme] instead to wrap the input, this has no effetct')
     ThemeData? appBarTheme,
@@ -222,16 +238,22 @@ class PageNavigator extends CountrySelectorNavigator {
   const PageNavigator._({
     super.countries,
     super.favorites,
+    super.backgroundDecoration,
     super.addSeparator,
     super.showDialCode,
     super.showCountryCode,
     super.sortCountries,
     super.noResultMessage,
+    super.dividerColor,
+    super.flagSize,
+    super.countryListBackgroundColor,
     super.searchAutofocus = kIsWeb,
     super.subtitleStyle,
     super.titleStyle,
     super.searchBoxDecoration,
     super.searchBoxTextStyle,
+    super.backButtonIcon,
+    super.backgroundWidget,
     super.searchBoxIconColor,
     super.scrollPhysics,
     @Deprecated('Use [Theme] instead to wrap the input, this has no effetct')
@@ -249,26 +271,34 @@ class PageNavigator extends CountrySelectorNavigator {
       context: inputContext,
       locale: Localizations.localeOf(inputContext),
       child: Theme(
-        data: Theme.of(inputContext),
-        child: CountrySelector.page(
-          onCountrySelected: onCountrySelected,
-          scrollController: scrollController,
-          countries: countries ?? IsoCode.values,
-          favoriteCountries: favorites ?? [],
-          noResultMessage: noResultMessage,
-          searchAutofocus: searchAutofocus,
-          showDialCode: showDialCode,
-          titleStyle: titleStyle,
-          subtitleStyle: subtitleStyle,
-        ),
+          data: Theme.of(inputContext),
+          child: CountrySelector.page(
+            backgroundDecoration: backgroundDecoration,
+            onCountrySelected: onCountrySelected,
+            scrollController: scrollController,
+            flagSize: flagSize,
+            dividerColor: dividerColor,
+            countryListBackgroundColor: countryListBackgroundColor,
+            countries: countries ?? IsoCode.values,
+            favoriteCountries: favorites ?? [],
+            noResultMessage: noResultMessage,
+            searchAutofocus: searchAutofocus,
+            showDialCode: showDialCode,
+            titleStyle: titleStyle,
+            backgroundWidget: backgroundWidget,
+            searchBoxDecoration: searchBoxDecoration,
+            searchBoxTextStyle: searchBoxTextStyle,
+            searchBoxIconColor: searchBoxIconColor,
+            subtitleStyle: subtitleStyle,
+          )
       ),
     );
   }
 
   @override
   Future<IsoCode?> show(
-    BuildContext context,
-  ) {
+      BuildContext context,
+      ) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => _getCountrySelectorPage(
@@ -300,8 +330,8 @@ class BottomSheetNavigator extends CountrySelectorNavigator {
 
   @override
   Future<IsoCode?> show(
-    BuildContext context,
-  ) {
+      BuildContext context,
+      ) {
     IsoCode? selected;
     final ctrl = showBottomSheet(
       context: context,
@@ -345,8 +375,8 @@ class ModalBottomSheetNavigator extends CountrySelectorNavigator {
 
   @override
   Future<IsoCode?> show(
-    BuildContext context,
-  ) {
+      BuildContext context,
+      ) {
     return showModalBottomSheet<IsoCode>(
       context: context,
       builder: (_) => SizedBox(
