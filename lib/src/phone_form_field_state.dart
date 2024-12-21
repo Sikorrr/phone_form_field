@@ -74,21 +74,22 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
   }
 
   Widget builder() {
-    return PhoneFieldSemantics(
-      hasFocus: focusNode.hasFocus,
-      enabled: widget.enabled,
-      inputDecoration: widget.decoration,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    final bool isFocused = focusNode.hasFocus;
+    final bool hasText = controller.value.nsn.isNotEmpty;
+    final bool shouldFloat = isFocused || hasText;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () => focusNode.requestFocus(),
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
           Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 decoration: widget.inputDecoration,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                height: 48, // Ensure a consistent height
+                height: 48,
                 child: AnimatedBuilder(
                   animation: controller,
                   builder: (context, _) => CountryButton(
@@ -100,30 +101,37 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
                       showDropdownIcon: widget.countryButtonStyle.showDropdownIcon,
                       textStyle: TextStyle(color: widget.inputTextColor, fontSize: 14),
                       iconColor: widget.inputTextColor,
-                      flagSize: widget.countryButtonStyle.flagSize
-                  ),
+                      flagSize: widget.countryButtonStyle.flagSize),
                 ),
               ),
               const SizedBox(width: 4),
               Expanded(
                 child: Container(
                   decoration: widget.inputDecoration,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: TextField(
+                    cursorHeight: 16,
                     controller: controller._formattedNationalNumberController,
                     focusNode: focusNode,
                     enabled: widget.enabled,
                     onChanged: _onTextfieldChanged,
-                    style: TextStyle(color: widget.inputTextColor, fontSize: 14),
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 14,
+                    style: TextStyle(
+                      color: widget.inputTextColor ?? Colors.black87,
+                      fontSize: 14,
+                    ),
+                    decoration: InputDecoration(
+                      prefixIconConstraints: const BoxConstraints(
+                        minWidth: 25,
                       ),
+                      prefixIcon: widget.prefix != null
+                          ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [widget.prefix!],
+                      )
+                          : null,
+                      contentPadding: const EdgeInsets.only(top: 10.0, bottom: 0.0),
                       border: InputBorder.none,
-                      hintText: 'Phone Number',
-                      hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                      hintText: '',
                     ),
                     keyboardType: widget.keyboardType,
                     inputFormatters: widget.inputFormatters ??
@@ -139,9 +147,25 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
               ),
             ],
           ),
+
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 200),
+            left: 158,
+            top: shouldFloat ? 6.0 : 12.0,
+            child: AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200),
+              style: widget.labelStyle.copyWith(
+                fontSize: shouldFloat ? 12.0 : 16.0,
+              ),
+              child: Text(widget.decoration.labelText ?? ''),
+            ),
+          ),
+
+
           if (errorText != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 4, left: 4),
+            Positioned(
+              bottom: -25,
+              left: 130,
               child: Text(
                 errorText!,
                 style: const TextStyle(

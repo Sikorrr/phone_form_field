@@ -9,6 +9,7 @@ import 'package:phone_form_field/src/validation/allowed_characters.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 part 'phone_controller.dart';
+
 part 'phone_form_field_state.dart';
 
 /// Phone input extending form field.
@@ -56,13 +57,12 @@ class PhoneFormField extends FormField<PhoneNumber> {
   /// The style of the country selector button
   final CountryButtonStyle countryButtonStyle;
 
-
-
   // textfield inputs
   final InputDecoration decoration;
   final TextInputType keyboardType;
   final TextInputAction? textInputAction;
   final TextStyle? style;
+  final TextStyle labelStyle;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
   final TextAlignVertical? textAlignVertical;
@@ -89,6 +89,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
   final EdgeInsets scrollPadding;
   final bool enableInteractiveSelection;
   final TextSelectionControls? selectionControls;
+
   bool get selectionEnabled => enableInteractiveSelection;
   final MouseCursor? mouseCursor;
   final ScrollPhysics? scrollPhysics;
@@ -98,6 +99,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
   final List<TextInputFormatter>? inputFormatters;
   final BoxDecoration? inputDecoration;
   final Color? inputTextColor;
+  final Widget? prefix;
 
   static preloadFlags() => CountrySelector.preloadFlags();
 
@@ -106,8 +108,10 @@ class PhoneFormField extends FormField<PhoneNumber> {
     this.controller,
     this.onChanged,
     this.focusNode,
+    this.prefix,
     this.inputDecoration,
     this.inputTextColor,
+    required this.labelStyle,
     this.countrySelectorNavigator = const CountrySelectorNavigator.page(),
     this.isCountrySelectionEnabled = true,
     this.isCountryButtonPersistent = true,
@@ -125,8 +129,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
     this.textInputAction,
     this.style,
     this.strutStyle,
-    @Deprecated('Has no effect, Change text directionality instead')
-    this.textAlign,
+    @Deprecated('Has no effect, Change text directionality instead') this.textAlign,
     this.textAlignVertical,
     this.autofocus = false,
     this.obscuringCharacter = '*',
