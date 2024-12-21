@@ -100,6 +100,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
   final BoxDecoration? inputDecoration;
   final Color? inputTextColor;
   final Widget? prefix;
+  final String? errorTextLocalizedMessage;
 
   static preloadFlags() => CountrySelector.preloadFlags();
 
@@ -108,6 +109,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
     this.controller,
     this.onChanged,
     this.focusNode,
+    this.errorTextLocalizedMessage,
     this.prefix,
     this.inputDecoration,
     this.inputTextColor,

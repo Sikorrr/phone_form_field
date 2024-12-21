@@ -167,7 +167,7 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
               bottom: -25,
               left: 130,
               child: Text(
-                errorText!,
+                widget.errorTextLocalizedMessage??errorText!,
                 style: const TextStyle(
                   color: Colors.red,
                   fontSize: 12,
