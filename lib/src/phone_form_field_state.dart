@@ -78,6 +78,14 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
     final bool hasText = controller.value.nsn.isNotEmpty;
     final bool shouldFloat = isFocused || hasText;
 
+
+    final border = errorText != null
+        ? widget.decoration!.errorBorder // Error state border color
+        : isFocused
+        ? widget.decoration!.focusedBorder // Focused border color
+        : widget.decoration!.border ;// Default enabled border color
+
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => focusNode.requestFocus(),
@@ -88,7 +96,6 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
             children: [
               Container(
                 decoration: widget.inputDecoration,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
                 height: 48,
                 child: AnimatedBuilder(
                   animation: controller,
@@ -108,7 +115,6 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
               Expanded(
                 child: Container(
                   decoration: widget.inputDecoration,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: TextField(
                     cursorHeight: 16,
                     controller: controller._formattedNationalNumberController,
@@ -121,19 +127,15 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
                     ),
                     decoration: InputDecoration(
                       prefixIconConstraints: const BoxConstraints(
-                        minWidth: 25,
+                        minWidth: 35,
                       ),
-                      prefixIcon: widget.prefix != null
-                          ? Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [widget.prefix!],
-                      )
-                          : null,
-                      contentPadding: const EdgeInsets.only(top: 10.0, bottom: 0.0),
-                      border: InputBorder.none,
-                      errorBorder: widget.decoration.errorBorder,
-                      focusedBorder: widget.decoration.focusedBorder,
-                      focusedErrorBorder: widget.decoration.focusedErrorBorder,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 4.0),
+                      prefixIcon: widget.decoration!.prefixIcon,
+                      border: border,
+                      errorBorder:border,
+                      enabledBorder: border,
+                      focusedBorder: border,
+                      focusedErrorBorder: border,
                       hintText: '',
                     ),
                     keyboardType: widget.keyboardType,
@@ -153,14 +155,14 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
 
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
-            left: 158,
-            top: shouldFloat ? 6.0 : 12.0,
+            left: 132,
+            top: shouldFloat ? 2.0 : 12.0,
             child: AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: widget.labelStyle.copyWith(
                 fontSize: shouldFloat ? 12.0 : 16.0,
               ),
-              child: Text(widget.decoration.labelText ?? ''),
+              child: Text(widget.decoration?.labelText ?? ''),
             ),
           ),
 

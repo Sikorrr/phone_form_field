@@ -58,7 +58,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
   final CountryButtonStyle countryButtonStyle;
 
   // textfield inputs
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
   final TextInputType keyboardType;
   final TextInputAction? textInputAction;
   final TextStyle? style;
@@ -126,7 +126,7 @@ class PhoneFormField extends FormField<PhoneNumber> {
     super.restorationId,
     super.enabled = true,
     // textfield inputs
-    this.decoration = const InputDecoration(),
+    this.decoration,
     this.keyboardType = TextInputType.phone,
     this.textInputAction,
     this.style,
