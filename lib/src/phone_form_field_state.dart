@@ -86,6 +86,11 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
         : widget.decoration!.border ;// Default enabled border color
 
 
+    final decoration = widget.inputDecoration!.copyWith(
+      border:  Border.all(color: border!.borderSide.color, width: 1),
+    );
+
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => focusNode.requestFocus(),
@@ -114,9 +119,11 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
               const SizedBox(width: 4),
               Expanded(
                 child: Container(
-                  decoration: widget.inputDecoration,
+                  height: 48,
+                  decoration: decoration,
                   child: TextField(
                     cursorHeight: 16,
+                    autofocus: widget.autofocus,
                     controller: controller._formattedNationalNumberController,
                     focusNode: focusNode,
                     enabled: widget.enabled,
@@ -129,13 +136,13 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
                       prefixIconConstraints: const BoxConstraints(
                         minWidth: 35,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 4.0),
+                      contentPadding: EdgeInsets.only(top: 10),
                       prefixIcon: widget.decoration!.prefixIcon,
-                      border: border,
-                      errorBorder:border,
-                      enabledBorder: border,
-                      focusedBorder: border,
-                      focusedErrorBorder: border,
+                      border: InputBorder.none,
+                      errorBorder:InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      focusedErrorBorder: InputBorder.none,
                       hintText: '',
                     ),
                     keyboardType: widget.keyboardType,
@@ -156,7 +163,7 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
             left: 132,
-            top: shouldFloat ? 2.0 : 12.0,
+            top: shouldFloat ? 6.0 : 14.0,
             child: AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: widget.labelStyle.copyWith(
