@@ -17,6 +17,11 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
         );
     controller.addListener(_onControllerValueChanged);
     focusNode = widget.focusNode ?? FocusNode();
+    focusNode.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -84,7 +89,6 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
         : isFocused
         ? widget.decoration!.focusedBorder // Focused border color
         : widget.decoration!.border ;// Default enabled border color
-
 
     final decoration = widget.inputDecoration!.copyWith(
       border:  Border.all(color: border!.borderSide.color, width: 1),
