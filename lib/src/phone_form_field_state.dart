@@ -181,7 +181,7 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
           if (errorText != null)
             Positioned(
               bottom: -25,
-              left: 130,
+              left: 145,
               child: Text(
                 widget.errorTextLocalizedMessage??errorText!,
                 style: const TextStyle(
