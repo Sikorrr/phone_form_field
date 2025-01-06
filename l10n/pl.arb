@@ -1,0 +1,31 @@
+{
+    "@@locale": "pl",
+    "invalidPhoneNumber": "Nieprawidłowy numer telefonu",
+    "invalidCountry": "Nieprawidłowy kraj",
+    "invalidMobilePhoneNumber": "Nieprawidłowy numer telefonu komórkowego",
+    "invalidFixedLinePhoneNumber": "Nieprawidłowy numer telefonu stacjonarnego",
+    "requiredPhoneNumber": "Wymagany numer telefonu",
+    "selectACountrySemanticLabel": "Wybierz kraj. Obecny wybór: {countryName} {dialCode}",
+    "@selectACountrySemanticLabel": {
+      "description": "opis semantyczny przycisku kraju",
+      "placeholders": {
+        "countryName": {
+          "type": "String"
+        },
+        "dialCode": {
+          "type": "String"
+        }
+      }
+    },
+    "phoneNumber": "Numer telefonu",
+    "currentValueSemanticLabel": "Obecna wartość: {currentValue}",
+    "@currentValueSemanticLabel": {
+      "description": "opis semantyczny wejścia numeru telefonu. Etykieta lub podpowiedź będzie dodawana dynamicznie",
+      "placeholders": {
+        "currentValue": {
+          "type": "String"
+        }
+      }
+    }
+  }
+  

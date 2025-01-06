@@ -59,6 +59,7 @@ class CountryButton extends StatelessWidget {
               const SizedBox(width: 8),
             ],
             if (showFlag) ...[
+              const SizedBox(width: 12),
               ExcludeSemantics(
                 child: CircleFlag(
                   isoCode.name,
